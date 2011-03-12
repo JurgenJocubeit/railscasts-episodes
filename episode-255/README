@@ -1,9 +1,11 @@
+Rails 2.3.8 (Ruby 1.8.7) branch for:
+
 Railscasts Episode #255: Undo with Paper Trail
 
 http://railscasts.com/episodes/255
 
 Commands
 
-  bundle
-  rails g paper_trail:install
-  rake db:migrate
+  gem install paper_trail -v1.6.5
+  script/server
+

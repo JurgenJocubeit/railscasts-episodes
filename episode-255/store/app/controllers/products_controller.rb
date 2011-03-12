@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
+  
   def index
-    @products = Product.order("released_at desc")
+    @products = Product.released_at_desc
   end
   
   def show
@@ -14,7 +15,8 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     if @product.save
-      redirect_to products_url, :notice => "Successfully created product. #{undo_link}"
+      flash[:notice] = "Successfully created product. #{undo_link}"
+      redirect_to @product
     else
       render :action => 'new'
     end
@@ -27,7 +29,8 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     if @product.update_attributes(params[:product])
-      redirect_to products_url, :notice => "Successfully updated product. #{undo_link}"
+      flash[:notice] = "Successfully updated product. #{undo_link}"
+      redirect_to @product
     else
       render :action => 'edit'
     end
@@ -36,12 +39,13 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy
-    redirect_to products_url, :notice => "Successfully destroyed product. #{undo_link}"
+    flash[:notice] = "Successfully destroyed product. #{undo_link}"
+    redirect_to products_url
   end
   
   private
   
   def undo_link
-    view_context.link_to("undo", revert_version_path(@product.versions.scoped.last), :method => :post)
+    @template.link_to("undo", revert_version_path(@product.versions.scoped.last), :method => :post)
   end
 end

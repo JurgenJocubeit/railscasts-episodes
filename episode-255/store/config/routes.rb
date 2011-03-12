@@ -1,5 +1,5 @@
-Store::Application.routes.draw do
-  post "versions/:id/revert" => "versions#revert", :as => "revert_version"
-  resources :products
-  root :to => "products#index"
+ActionController::Routing::Routes.draw do |map|
+  map.revert_version "versions/:id/revert", :controller => :versions, :action => :revert, :method => :post
+  map.resources :products
+  map.root :controller => "products", :action => "index"
 end
